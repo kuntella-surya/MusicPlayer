@@ -13,24 +13,19 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-
-import com.example.loadinganimation.LoadingAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 public class splash extends AppCompatActivity {
     Handler handler;
-    LoadingAnimation loadingAnim;
+    ImageView imageView;
+    Animation topanim,bottomanim;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        loadingAnim = findViewById(R.id.loadingAnim);
-        loadingAnim.setProgressVector(getResources().getDrawable(com.example.loadinganimation.R.drawable.color_capsule));
-        loadingAnim.setTextViewVisibility(true);
-        loadingAnim.setTextStyle(true);
-        loadingAnim.setTextColor(Color.YELLOW);
-        loadingAnim.setTextSize(12F);
-        loadingAnim.setTextMsg("Please Wait");
-        loadingAnim.setEnlarge(5);
+        topanim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             int start = Color.parseColor("#3498db");
             int end = Color.parseColor("#e74c3c");
@@ -45,6 +40,8 @@ public class splash extends AppCompatActivity {
             window.setBackgroundDrawable(layerDrawable);
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
+        imageView = findViewById(R.id.imageView2);
+        imageView.setAnimation(topanim);
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -52,6 +49,6 @@ public class splash extends AppCompatActivity {
                 Intent splashintent = new Intent(splash.this,MainActivity.class);
                 startActivity(splashintent);
             }
-        },500);
+        },2000);
     }
 }
